@@ -148,8 +148,8 @@
 
     #include "mbed.h"
 
-    static Timer  blynk_millis_timer;
-    static Ticker blynk_waker;
+    static mbed::Timer  blynk_millis_timer;
+    static mbed::Ticker blynk_waker;
 
     static
     void blynk_wake() {
@@ -159,21 +159,23 @@
     BLYNK_CONSTRUCTOR
     static void BlynkSystemInit()
     {
-        blynk_waker.attach(&blynk_wake, 2.0);
-        blynk_millis_timer.start();
+        //blynk_waker.attach(&blynk_wake, 2.0);
+        //blynk_millis_timer.start();
     }
 
     void BlynkDelay(millis_time_t ms)
     {
-        wait_ms(ms);
+        wait_us(ms*1000);
     }
 
-    millis_time_t BlynkMillis()
+    /*millis_time_t BlynkMillis()
     {
         return blynk_millis_timer.read_ms();
-    }
+        return 0;
+    }*/
 
     #define _BLYNK_USE_DEFAULT_FREE_RAM
+    #define _BLYNK_USE_DEFAULT_MILLIS
     #define _BLYNK_USE_DEFAULT_RESET
 
 #elif defined(LINUX) && defined(RASPBERRY)
